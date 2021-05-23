@@ -4,8 +4,7 @@ import {PgConnection} from "../connection/pg.connection";
 @Injectable()
 
 export class LinkModifyQueryService {
-    @Inject()
-    private readonly pg: PgConnection;
+    @Inject() private readonly pg: PgConnection;
 
     saveNewLink (originalUrl: string, smallUrl: string) {
         return this.pg.edit(`insert into link (original_url, small_url) values 

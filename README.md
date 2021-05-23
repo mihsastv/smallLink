@@ -21,7 +21,16 @@
 
 ## Описание выполнения
 
-В качестве хранения используется база Postres
+В качестве хранения используется база Postres, 
+   для подключения без ORM используется http://github.com/brianc/node-postgres используется по умолчанию
+или подкючения с использованием TypeOrm https://typeorm.io/, 
+для переключения достаточно указать в Header base: orm
+Для логирования действий с таблицей используется audit схема postgres 
+стандартными методами. 
+
+Документирование API c использованием Swagger
+
+Короткие ссылки формируются шифрованием (bcrypt) текущей даты в unix формате
 
 
 ## Platform
@@ -47,8 +56,23 @@ ORM_ENTITIES ='/../../**/*.entity{.ts,.js}'
 ````
 
 ## Installation
+Для локальной установки postgres требуется
+установка 
+docker-compose https://docs.docker.com/compose/install/
 
-```bash
+Также необходимо установить
+
+node js https://nodejs.org/en/download/
+
+nest js https://docs.nestjs.com/
+
+После установки из корня проекта выполнить 
+``` shell script
+$ docker-composer up 
+```
+После этого 
+
+``` shell script
 $ npm install
 ```
 
@@ -58,7 +82,7 @@ $ npm install
 для подключения используется DATABASE_URL из окружения
 
 ````shell script
-    yarn run migrate up 
+$ npm run migrate up 
 ````
 
 ## Запуск приложения
@@ -80,7 +104,9 @@ $ npm run test
 
 # e2e tests
 $ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
+
+## Swagger 
+При запущеном сервере в дев режиме
+
+http://localhost:3333/api-doc

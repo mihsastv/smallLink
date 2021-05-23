@@ -1,6 +1,23 @@
-import {Body, Controller, Delete, Get, Header, Inject, Logger, Param, Post, Query, Req, Res} from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Inject,
+    Logger,
+    Param,
+    Post,
+    Req,
+    Res
+} from '@nestjs/common';
 import {LinkModifyService} from './link-modify.service';
-import {ApiBody, ApiHeader, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {
+    ApiBody,
+    ApiHeader,
+    ApiOperation,
+    ApiParam, ApiResponse,
+    ApiTags
+} from '@nestjs/swagger';
 import {ResultInterface} from '../common/common.interface';
 import {CreateLinkDto} from './dto/create-link.dto';
 import {LinkValidDto} from './dto/link-valid.dto';
@@ -22,7 +39,7 @@ export class LinkModifyController {
     @Inject() private readonly linkModifyService: LinkModifyService;
 
     @Get(':linkId')
-    @ApiOperation({summary: 'Переадресация по коротокой ссылке'})
+    @ApiOperation({summary: 'Переадресация по короткой ссылке'})
     @ApiParam({
         name: 'linkId',
         type: 'string',
@@ -62,7 +79,7 @@ export class LinkModifyController {
         },
     })
     createLink(@Body() body: CreateLinkDto,
-               @Req() req,
+               @Req() req?,
     ): Promise<ResultInterface> {
         this.logger.log(`Create small link for ${body.link}`);
         return this.linkModifyService.createLink(body.link, this.getHeaderBase(req));
@@ -88,7 +105,7 @@ export class LinkModifyController {
     })
     async deleteLink(
         @Param('linkId') linkId: string,
-        @Req() req,
+        @Req() req?,
     ): Promise<ResultInterface> {
         const errors = await validate(new LinkValidDto(linkId));
         checkError(errors);

@@ -5,9 +5,9 @@ import {SwaggerStart} from "./swagger/swagger";
 import {Logger, ValidationPipe} from "@nestjs/common";
 import configuration from "./config/configuration";
 import { join } from 'path';
+const logger = new Logger('APPStart')
 
 async function bootstrap() {
-    const logger = new Logger('APPStart')
     const app = await NestFactory.create<NestExpressApplication>(AppModule, {cors: true});
     const port = configuration().serverPort;
     app.setBaseViewsDir(join(__dirname, '../../', 'views'));
@@ -23,4 +23,4 @@ async function bootstrap() {
     });
 }
 
-bootstrap();
+bootstrap().catch(e => logger.error(e));

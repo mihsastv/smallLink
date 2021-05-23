@@ -1,24 +1,32 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+import {LinkModifyModule} from "../src/link-modify/link-modify.module";
+import {AppModule} from "../src/app.module";
 
-describe('AppController (e2e)', () => {
+describe('LinkModifyController (e2e)', () => {
   let app: INestApplication;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [AppModule, LinkModifyModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('/ delete small link', () => {
     return request(app.getHttpServer())
-      .get('/')
+      .delete('/testTESTtestTESTtest')
       .expect(200)
-      .expect('Hello World!');
+      .expect({
+        "result": "error",
+        "message": "modified link not found"
+      });
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 });
