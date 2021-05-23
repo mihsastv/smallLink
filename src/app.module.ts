@@ -6,7 +6,6 @@ import {ConnectionModule} from "./connection/connection.module";
 import configuration from "./config/configuration";
 import {AppController} from "./app.controller";
 
-
 @Module({
     imports: [ConfigModule.forRoot({
         load: [configuration],
@@ -14,7 +13,7 @@ import {AppController} from "./app.controller";
     }),
         LinkModifyModule,
         ConnectionModule],
-    providers: [AppService],
+    providers: [AppService,],
     controllers: [AppController],
 })
 export class AppModule {

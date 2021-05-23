@@ -1,14 +1,11 @@
 import {Column, Entity, PrimaryColumn} from "typeorm";
 
 @Entity()
-export class LinkEntity {
+export class Link {
 
     @Column({nullable: false})
-    originalUrl: string;
+    original_url: string;
 
     @PrimaryColumn("varchar", {nullable: false})
-    smallUrl: string;
-
-    @Column('int', {default: Date.now()})
-    createdAt: number;
+    small_url: string;
 }

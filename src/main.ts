@@ -17,7 +17,7 @@ async function bootstrap() {
         SwaggerStart(app)
     }
     app.useGlobalPipes(new ValidationPipe());
-
+    logger.log(__dirname + '/../entity/link.entity{.ts,.js}');
     await app.listen(port, () => {
         logger.log('Server listening at http://localhost:' + port + '/');
     });

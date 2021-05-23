@@ -1,24 +1,27 @@
 /* eslint-disable @typescript-eslint/camelcase */
-export default () => ({
+
+import {ConnectionOptions} from "typeorm";
+
+export default (): ConfigInterface => ({
     isProduct: process.env.IS_PRODUCT === 'true',
-    port: process.env.SERVER_PORT || 3333,
-    mongo: {
-        MONGODB_CRM_URL: process.env.CRM_MONGO_URL || 'mongodb://192.168.100.7:27017',
-        MONGO_CRM_BASE:  process.env.CRM_MONGO_DB || 'hyundaimobility_test',
-        MONGODB_MTA_URL: 'mongodb://192.168.100.7:27017',
-        MONGO_MTA_BASE: 'mta_logs'
-    },
-
-    postgreSqlCfg:  {
-        url: process.env.PGSQL,
-        url_customer: process.env.PGSQL_CUSTOMER
-    },
-
-    tcp: {
-        host: process.env.TCP || '192.168.100.13',
-        port: process.env.TCP_PORT || 9010,
-        pwd: process.env.TCP_PWD || 'zafer'
-    },
-
-    ttriCod: process.env.TTRI_CHECK_CODE || 'test_code_for_device'
+    serverPort: process.env.SERVER_PORT || 3333,
+    postgresUrl: process.env.DATABASE_URL || 'postgresql://postgres:secret@localhost:5432/medteh',
+    globalUrl: process.env.GLOBAL_URL || 'http://localhost:3333',
+    postgresOrm:  {
+        type: 'postgres',
+        host: process.env.ORM_HOST || 'localhost',
+        port: parseInt(process.env.ORM_PORT) || 5432,
+        username: process.env.ORM_USERNAME || 'postgres',
+        password:  process.env.ORM_PASSWORD ||'secret',
+        database: process.env.ORM_DATABASE || 'medteh',
+        entities: [__dirname + process.env.ORM_ENTITIES] || [
+            __dirname + '/../../**/*.entity{.ts,.js}',
+        ],
+        synchronize: false,
+    }
 });
+
+interface ConfigInterface {
+    postgresOrm: ConnectionOptions,
+   [key: string]: any;
+}
